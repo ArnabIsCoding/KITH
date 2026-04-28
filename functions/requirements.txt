@@ -1,0 +1,12 @@
+# Firebase Functions Python runtime dependencies
+firebase-functions>=0.1.0
+firebase-admin>=6.0.0
+
+# Gemini AI (new SDK)
+google-genai>=1.0.0
+google-api-core>=2.0.0
+
+# Data processing
+pandas>=2.0.0
+openpyxl>=3.1.0    # xlsx support
+xlrd>=2.0.0        # xls support

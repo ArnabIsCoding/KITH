@@ -1,0 +1,15 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+
+# Block authenticated/private pages — no value in indexing these
+Disallow: /dashboard
+Disallow: /explore
+Disallow: /onboarding
+Disallow: /active-deployments
+Disallow: /team
+Disallow: /impact
+Disallow: /my-nest
+
+# Allow public pages to be indexed
+Allow: /
+Allow: /sign-in

@@ -1,0 +1,62 @@
+{
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "runtime": "python312",
+      "ignore": [
+        "venv",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ]
+    }
+  ],
+  "hosting": {
+    "public": "client/build",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/api/analyzeSurvey",
+        "function": "analyzeSurvey"
+      },
+      {
+        "source": "/api/fetchPeopleInfo",
+        "function": "fetchPeopleInfo"
+      },
+      {
+        "source": "/api/bulkUpload",
+        "function": "bulkUpload"
+      },
+      {
+        "source": "/api/analyzeMapCrime",
+        "function": "analyzeMapCrime"
+      },
+      {
+        "source": "/api/getGooglePlaceInfo",
+        "function": "getGooglePlaceInfo"
+      },
+      {
+        "source": "/api/generateContent",
+        "function": "generateContent"
+      },
+      {
+        "source": "/api/analyzeEconomy",
+        "function": "analyzeEconomy"
+      },
+      {
+        "source": "/api/bulkUploadTeam",
+        "function": "bulkUploadTeam"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
