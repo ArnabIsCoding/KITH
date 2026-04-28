@@ -79,7 +79,7 @@ const ActiveDeploymentsCard: React.FC<ActiveDeploymentsCardProps> = ({
     ? meetsAggregationThreshold(zoneAggregate.profileCount)
     : false;
 
-	const primaryOnboardingProfile = (zoneAggregate && thresholdMet) ? zoneAggregate : null;
+  const primaryOnboardingProfile = (zoneAggregate && thresholdMet) ? zoneAggregate : null;
 
   const handleUpdateNotes = (val: string) => {
     if (auth?.user?.id)
@@ -94,15 +94,17 @@ const ActiveDeploymentsCard: React.FC<ActiveDeploymentsCardProps> = ({
   };
 
   const handleAIPredict = async () => {
-		if (!auth?.user?.id) return;
-		if (
+    if (!auth?.user?.id) return;
+    if (
     assignment.economicStrength &&
+    assignment.economicStrength !== "" &&
     assignment.crimeScore !== undefined &&
     assignment.crimeScore !== null &&
-    assignment.initialSummary
-  	) {
+    assignment.initialSummary &&
+    assignment.initialSummary !== ""
+    ) {
     return;
-  	}
+    }
     setIsPredicting(true);
     try {
       const locationStr = `${(
@@ -148,8 +150,16 @@ const ActiveDeploymentsCard: React.FC<ActiveDeploymentsCardProps> = ({
       setIsPredicting(false);
     }
   };
+  const riskScore = primaryOnboardingProfile?.risk_score;
+  const crimeScore = assignment.crimeScore;
 
-  const displayScore = assignment.crimeScore ?? primaryOnboardingProfile?.risk_score;
+  let displayScore: number | undefined;
+  if (riskScore !== undefined && crimeScore !== undefined) {
+    displayScore = Math.round(((riskScore + crimeScore) / 2) * 10) / 10;
+  } else {
+    displayScore = riskScore ?? crimeScore;
+  }
+
   const scoreColor   = displayScore !== undefined ? riskColor(displayScore) : INK_20;
   const scoreTag     = displayScore !== undefined ? riskLabel(displayScore) : "—";
 
@@ -318,6 +328,27 @@ const ActiveDeploymentsCard: React.FC<ActiveDeploymentsCardProps> = ({
               ))}
             </div>
           )}
+          {primaryOnboardingProfile.explanation && (
+            <div style={{
+              marginTop: 12, padding: "10px 12px",
+              borderLeft: `2px solid ${ACCENT}`,
+              background: PAPER,
+            }}>
+              <div style={{
+                fontFamily: FONT_MONO, fontSize: "9px",
+                letterSpacing: "0.18em", textTransform: "uppercase",
+                color: INK_60, marginBottom: 6,
+              }}>
+                Community Risk Summary
+              </div>
+              <p style={{
+                fontFamily: FONT_BODY, fontSize: "0.8rem",
+                color: INK_60, lineHeight: 1.65, margin: 0,
+              }}>
+                {primaryOnboardingProfile.explanation}
+              </p>
+            </div>
+          )}
         </div>
       )}
 
@@ -331,7 +362,6 @@ const ActiveDeploymentsCard: React.FC<ActiveDeploymentsCardProps> = ({
           </span>
         </div>
       )}
-
       <div style={{ padding: "0 24px 16px" }}>
         <div style={{
           fontFamily: FONT_MONO, fontSize: "9px",
@@ -341,7 +371,6 @@ const ActiveDeploymentsCard: React.FC<ActiveDeploymentsCardProps> = ({
         }}>
           <Zap size={11} strokeWidth={1.5} /> Area Intelligence
         </div>
-
         <div style={{
           display: "flex", justifyContent: "space-between", alignItems: "center",
           padding: "10px 0", borderBottom: `1px solid ${INK_20}`,
@@ -367,26 +396,31 @@ const ActiveDeploymentsCard: React.FC<ActiveDeploymentsCardProps> = ({
           />
         </div>
 
-				<IntelRow label="Econ Strength" value={assignment.economicStrength} color={CLEAR} />
-				{(assignment.initialSummary || primaryOnboardingProfile?.explanation) && (
-  			<div style={{
-    marginTop: 16, padding: "12px 14px",
-    borderLeft: `2px solid ${CLEAR}`,
-    background: PAPER_DARK,
-  }}>
-    <div style={{
-      fontFamily: FONT_MONO, fontSize: "9px",
-      letterSpacing: "0.18em", textTransform: "uppercase",
-      color: INK_60, marginBottom: 8,
-    }}>
-      Economics Summary
-    </div>
-    <p style={{fontFamily: FONT_BODY, fontSize: "0.8rem",color: INK_60, lineHeight: 1.65, margin: 0,}}>
-      			{assignment.initialSummary || primaryOnboardingProfile?.explanation}
-    			</p>
-  		</div>
-				)}
-				<IntelRow label="Crime/Risk Score" value={assignment.crimeScore ?? primaryOnboardingProfile?.risk_score} color={CRISIS} />
+        <IntelRow label="Econ Strength" value={assignment.economicStrength} color={CLEAR} />
+
+        {assignment.initialSummary && (
+          <div style={{
+            marginTop: 16, padding: "12px 14px",
+            borderLeft: `2px solid ${CLEAR}`,
+            background: PAPER_DARK,
+          }}>
+            <div style={{
+              fontFamily: FONT_MONO, fontSize: "9px",
+              letterSpacing: "0.18em", textTransform: "uppercase",
+              color: INK_60, marginBottom: 8,
+            }}>
+              Economics Summary
+            </div>
+            <p style={{
+              fontFamily: FONT_BODY, fontSize: "0.8rem",
+              color: INK_60, lineHeight: 1.65, margin: 0,
+            }}>
+              {assignment.initialSummary || primaryOnboardingProfile?.explanation}
+            </p>
+          </div>
+        )}
+
+        <IntelRow label="Crime/Risk Score" value={assignment.crimeScore ?? primaryOnboardingProfile?.risk_score} color={CRISIS} />
 
         {assignment.crimeReasoning && (
           <div style={{
@@ -410,7 +444,6 @@ const ActiveDeploymentsCard: React.FC<ActiveDeploymentsCardProps> = ({
           </div>
         )}
       </div>
-
       <div style={{ padding: "16px 24px", borderTop: `1px solid ${INK_20}` }}>
         <div style={{
           display: "flex", justifyContent: "space-between",

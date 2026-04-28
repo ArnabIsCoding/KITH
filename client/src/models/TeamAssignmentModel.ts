@@ -6,7 +6,8 @@ export interface TeamAssignmentModel {
   assignedAt: string;
   fieldNotes?: string;
   riskLevel?: number;
-  totalPeople?: number;
+	totalPeople?: number;
+	geminiExplanation?: string;
   riskFactors?: string[];
   initialSummary?: string;
   economicStrength?: string;
