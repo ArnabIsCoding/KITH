@@ -101,7 +101,7 @@ const Footer: React.FC = () => (
             }}>
               Built With
             </p>
-            {["Google Gemini - Vertex AI", "Maps API", "Firebase - hosting, functions", "React + TypeScript", "indexedDB"].map(item => (
+            {["Google Gemini - Vertex AI", "Maps API", "Firebase - hosting, functions", "React + TypeScript", "indexedDB", "Antigravity - for dev"].map(item => (
               <p key={item} style={{
                 fontFamily: FONT_MONO, fontSize: "10px",
                 letterSpacing: "0.14em",
