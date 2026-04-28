@@ -14,6 +14,7 @@ import {
   FONT_MONO, FONT_DISPLAY, FONT_BODY,
   btnPrimary, btnGhost, pageShell,
 } from "../theme";
+
 const FadeIn: React.FC<{ children: React.ReactNode; delay?: number; className?: string }> = ({
   children, delay = 0, className,
 }) => {
@@ -29,44 +30,43 @@ const FadeIn: React.FC<{ children: React.ReactNode; delay?: number; className?: 
     </motion.div>
   );
 };
-
 const STEPS = [
-  { num: "01", title: "Upload Field Data",  desc: "Bulk CSV ingestion or granular manual entry of demographic, social, and behavioral indicators from the field." },
-  { num: "02", title: "Gemini AI Analysis", desc: "Python/Flask backend invokes the Gemini API to detect early warning patterns across economic, lifestyle, and mental health axes." },
-  { num: "03", title: "Risk Score Output",  desc: "Standardized 1–10 vulnerability score generated per community node. Heatmap layers rendered via Google Maps API." },
-  { num: "04", title: "Deploy & Monitor",   desc: "Field teams draw active deployment zones. Firebase syncs assignments in real time — no manual refresh." },
+  { num: "01", title: "Upload Field Data",  desc: "Bulk CSV ingestion, direct manual entry, or photo capture of demographic, social, and behavioral indicators from the field. Offline-first — surveys queue locally and sync automatically on reconnect." },
+  { num: "02", title: "Gemini AI Analysis", desc: "Firebase Cloud Functions (Python 3.12) invoke Gemini 2.5 Flash via Vertex AI to detect early warning patterns across economic, lifestyle, and mental health axes. Structured JSON risk profile returned in under 2 minutes." },
+  { num: "03", title: "Risk Score Output",  desc: "Standardized 1–10 vulnerability score generated per community node. GPS-geocoded and rendered as a live heatmap layer via Google Maps API." },
+  { num: "04", title: "Deploy & Monitor",   desc: "Field teams draw active deployment zones on the Ops Map. Gemini scores each zone's crime and economic context. Firebase syncs assignments in real time — no manual refresh." },
 ];
 
 const FEATURES = [
-  { icon: Brain,         title: "AI-Driven Risk Scoring",   desc: "Gemini analyzes complex demographic and behavioral data, converting it into a standardized 1–10 vulnerability index.", tag: "GEMINI API" },
-  { icon: MapPin,        title: "Geospatial Matchmaking",   desc: "Google Maps heatmap overlays + custom polygon drawing tools allow teams to query demographic risk within any drawn boundary.", tag: "MAPS API" },
-  { icon: Eye,           title: "Real-Time Ops Dashboard",  desc: "Firebase onValue listeners push field assignment updates and AI intelligence profiles instantly across all connected clients.", tag: "FIREBASE" },
-  { icon: Upload,        title: "Flexible Data Ingestion",  desc: "Bulk CSV upload or direct manual entry. Both paths route through identical AI analysis pipelines.", tag: "FLASK" },
-  { icon: Shield,        title: "Ethical AI Framework",     desc: "Every insight is anonymized at community level. Zero individual profiles stored. Human review required before action.", tag: "PRIVACY-FIRST" },
-  { icon: AlertTriangle, title: "Actionable Intelligence",  desc: "Structured risk profiles drive precise, map-based field intelligence — bridging raw survey data and on-ground action.", tag: "FIELD OPS" },
+  { icon: Brain,         title: "AI-Driven Risk Scoring",     desc: "Gemini 2.5 Flash via Vertex AI analyzes complex demographic and behavioral data, converting it into a standardized 1–10 vulnerability index with mandatory override rules for accuracy.", tag: "VERTEX AI" },
+  { icon: MapPin,        title: "Geospatial Intelligence",    desc: "Google Maps heatmap overlays and custom rectangle drawing tools allow teams to visualize demographic risk concentration and assign field zones to specific team members.", tag: "MAPS API" },
+  { icon: Eye,           title: "Real-Time Ops Dashboard",    desc: "Firebase onValue listeners push field assignment updates and AI intelligence profiles instantly across all connected clients. Zone crime scores and economic context loaded on demand.", tag: "FIREBASE" },
+  { icon: Upload,        title: "Flexible Data Ingestion",    desc: "Bulk CSV/Excel upload, direct manual multi-form entry, or photo capture of handwritten surveys. All three paths route through identical Gemini AI analysis pipelines.", tag: "FIREBASE FUNCTIONS" },
+  { icon: Shield,        title: "Ethical AI Framework",       desc: "Every insight is anonymized at community level. A k-anonymity threshold prevents display of zones with fewer than 3 profiles. Zero individual records stored. Human review required before action.", tag: "PRIVACY-FIRST" },
+  { icon: AlertTriangle, title: "Intervention Outcome Tracking", desc: "Supervisors record intervention type and follow-up risk re-score after deployment. Impact Page renders before/after line charts — closing the loop from data collection to measurable community impact.", tag: "FIELD OPS" },
 ];
 
 const STATS = [
-  { value: "1–10", label: "Vulnerability score scale" },
-  { value: "94%",  label: "AI detection accuracy" },
-  { value: "<2m",  label: "Analysis turnaround" },
-  { value: "0",    label: "Individual profiles stored" },
+  { value: "1–10",  label: "Vulnerability score scale" },
+  { value: "3",     label: "Data ingestion modes" },
+  { value: "<2m",   label: "Analysis turnaround" },
+  { value: "0",     label: "Individual profiles stored" },
 ];
 
 const TECH_STACK = [
-  { name: "Google Gemini",      tag: "AI Core" },
-  { name: "Google Maps API",    tag: "Geospatial" },
-  { name: "Firebase RTDB",      tag: "Real-time" },
-  { name: "React + TypeScript", tag: "Frontend" },
-  { name: "Python / Flask",     tag: "Backend" },
-  { name: "Framer Motion",      tag: "UX" },
+  { name: "Gemini 2.5 Flash",              tag: "AI Core" },
+  { name: "Vertex AI",                     tag: "AI Platform" },
+  { name: "Google Maps API",               tag: "Geospatial" },
+  { name: "Firebase RTDB + Firestore",     tag: "Real-time" },
+  { name: "React + TypeScript",            tag: "Frontend" },
+  { name: "Python 3.12 / Firebase Functions", tag: "Backend" },
 ];
 
 const TICKER_ITEMS = [
   "SUBSTANCE ABUSE PREVENTION", "GEOSPATIAL INTELLIGENCE",
   "REAL-TIME RISK MAPPING", "GOOGLE SOLUTION CHALLENGE 2026",
   "AI-POWERED FIELD OPS", "COMMUNITY VULNERABILITY INDEX",
-  "FIREBASE SYNC", "ETHICAL AI",
+  "VERTEX AI", "ETHICAL AI",
 ];
 
 const teamMember = {
@@ -91,6 +91,7 @@ const LandingPage: React.FC = () => {
 
   const scrollTo = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+
   const hoverIn  = (e: React.MouseEvent<HTMLElement>, bg: string, color: string) => {
     (e.currentTarget as HTMLElement).style.background = bg;
     (e.currentTarget as HTMLElement).style.color = color;
@@ -109,6 +110,7 @@ const LandingPage: React.FC = () => {
         position: "relative", overflow: "hidden", background: PAPER,
       }}>
         <div className="grid-overlay" />
+
         <motion.div
           style={{ y: heroY }}
           aria-hidden="true"
@@ -179,7 +181,7 @@ const LandingPage: React.FC = () => {
             ))}
           </div>
         </div>
-			</section>
+      </section>
 
       <section style={{ background: PAPER_DARK, borderBottom: `1px solid ${INK_20}`, padding: "0 40px" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
@@ -263,7 +265,6 @@ const LandingPage: React.FC = () => {
           </div>
         </div>
       </section>
-
       <section id="features" style={{ padding: "120px 40px", borderTop: `1px solid ${INK_20}`, background: INK, position: "relative", zIndex: 1 }}>
         <div style={{
           position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0,
@@ -420,7 +421,6 @@ const LandingPage: React.FC = () => {
       <Footer />
 
       <style>{`
-        /* Watermark */
         .lp-watermark {
           position: absolute; top: 50%; left: 50%;
           transform: translate(-50%, -52%);
@@ -433,16 +433,11 @@ const LandingPage: React.FC = () => {
         }
         .lp-watermark::after { content: "KITH"; }
 
-        /* Stats — 4 cols desktop */
         .lp-stats-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
         }
 
-        /*
-          Steps — strict 4-column grid, left+top border on container,
-          right+bottom on each cell. No gap. No orphan.
-        */
         .lp-steps-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
@@ -454,7 +449,6 @@ const LandingPage: React.FC = () => {
           border-bottom: 1px solid ${INK_20};
         }
 
-        /* Features — 3 cols */
         .lp-features-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
@@ -462,7 +456,6 @@ const LandingPage: React.FC = () => {
           background: rgba(242,239,234,0.06);
         }
 
-        /* Tech — 6 cols */
         .lp-tech-grid {
           display: grid;
           grid-template-columns: repeat(6, 1fr);
@@ -470,13 +463,11 @@ const LandingPage: React.FC = () => {
           background: rgba(242,239,234,0.06);
         }
 
-        /* Team */
         .lp-team-flex {
           display: flex; gap: 80px;
           align-items: flex-start; flex-wrap: wrap;
         }
 
-        /* Responsive */
         @media (max-width: 1024px) {
           .lp-steps-grid    { grid-template-columns: repeat(2, 1fr) !important; }
           .lp-features-grid { grid-template-columns: repeat(2, 1fr) !important; }
