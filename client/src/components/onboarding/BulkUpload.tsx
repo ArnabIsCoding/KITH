@@ -112,7 +112,7 @@ const BulkUpload: React.FC<OnboardPageProps> = (props) => {
       await enqueue({
         payload:    { fileName: file.name, fileSize: file.size, note: "Bulk file — re-upload required on sync" },
         uploadType: "bulk_upload",
-        endpoint:   `/bulkUpload`,
+        endpoint:   `${process.env.REACT_APP_BACKEND_URL}/bulkUpload`,
         label:      `Bulk file · ${file.name}`,
         userId:     auth?.user?.id ?? "",
       });

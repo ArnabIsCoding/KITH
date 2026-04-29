@@ -197,7 +197,7 @@ export async function syncPending(
           method:  "POST",
           headers: authHeader,
           body:    formData,
-          signal:  AbortSignal.timeout(15000),
+          signal:  AbortSignal.timeout(90000),
         });
 
         if (!res.ok) {

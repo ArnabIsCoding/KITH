@@ -79,7 +79,7 @@ const DirectUpload: React.FC<OnboardPageProps> = (props) => {
         await enqueue({
           payload:    compiledData,
           uploadType: "direct_upload",
-          endpoint:   `/analyzeSurvey`,
+          endpoint:   `${process.env.REACT_APP_BACKEND_URL}/analyzeSurvey`,
           label:      `Manual entry · ${locationGuess}`,
           userId:     auth?.user?.id ?? "",
         });
@@ -158,7 +158,7 @@ const DirectUpload: React.FC<OnboardPageProps> = (props) => {
   }, [auth?.user?.id, rawData]);
 
 	useEffect(() => { props.registerSave(saveAllData); }, [props, saveAllData]);
-	
+
   const handleReset = () => {
     setStatus("idle");
     setResult(null);
