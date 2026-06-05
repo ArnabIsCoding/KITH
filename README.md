@@ -1,5 +1,6 @@
 # Kith — Community Risk Intelligence Platform
 <img width="587" height="418" alt="HAS FAILED THE HACKATHON" src="https://github.com/user-attachments/assets/c6f21883-8800-4620-8f81-079737d7452b" />
+
 HAS FAILED THE HACKATHON
 
 Kith helps NGOs and field teams identify and respond to substance abuse and mental health risk in communities. It analyzes survey data, photos, and bulk uploads using Gemini AI to generate risk scores, maps hotspots, and coordinates field deployments.
